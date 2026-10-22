@@ -1,0 +1,17 @@
+{
+  "version": "0.1.0",
+  "upstream": {
+    "repository": "HaujetZhao/CapsWriter-Offline",
+    "tag": "v2.6",
+    "name": "CapsWriter-Offline-20260914.zip",
+    "url": "https://github.com/HaujetZhao/CapsWriter-Offline/releases/download/v2.6/CapsWriter-Offline-20260914.zip",
+    "sha256": "40a46100e2b221ed487d85aa923a38f8f722090bf1fa86975b701baceafbb6f4",
+    "size": 110555597
+  },
+  "model": {
+    "name": "Fun-ASR-Nano-GGUF.zip",
+    "url": "https://github.com/HaujetZhao/CapsWriter-Offline/releases/download/models/Fun-ASR-Nano-GGUF.zip",
+    "sha256": "26a557923aedc44f1a3033d0a9b9c7b13cbb551f57fb9fd4b15a67bb4b57f998",
+    "size": 834231292
+  }
+}

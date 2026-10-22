@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "holdEnabled": true,
+  "holdKeys": [
+    "caps_lock"
+  ],
+  "toggleEnabled": true,
+  "toggleKey": "f9"
+}
