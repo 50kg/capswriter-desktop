@@ -43,7 +43,17 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Install.ps1 -I
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Package.ps1
 ```
 
-打包脚本只使用 `git archive HEAD` 中的已提交内容，并加入从当前源码构建的三个桌面组件，生成 ZIP 和 SHA-256 文件。不包含模型、官方 Python 运行环境或本地运行数据。
+这条命令生成轻量包：使用 `git archive HEAD` 中的已提交内容，并加入从当前源码构建的三个桌面组件，生成 ZIP 和 SHA-256 文件。
+
+要生成解压即用的完整离线包，先准备 `manifest.json` 对应的两个官方原始压缩包：
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Package-Offline.ps1 -ArchiveDirectory "E:\official-archives"
+```
+
+完整包的构建工具需要开发机上的 Python 3.12+；终端用户不需要 Python 或安装步骤。构建器重新校验官方包摘要，将原始运行环境、模型、已提交覆盖层、公开默认配置和许可文件合并到一个 ZIP，不复制个人运行目录。上游模型实验脚本、在线角色配置、缓存、日志和录音目录不纳入完整包。打包逻辑有小型合成 ZIP 的自动测试，CI 不下载大模型。
+
+首次启动会创建日志和临时目录，并在不存在设备缓存时自动枚举本机麦克风。请在不影响日常实例的独立目录中测试完整包；使用不同本机端口测试后，不要把测试配置重新打包。
 
 ## 本地功能验证范围
 

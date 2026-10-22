@@ -6,9 +6,9 @@ $tempDir = Join-Path $root '临时文件'
 $mutex = New-Object System.Threading.Mutex($false, 'Local\CapsWriterLocalVoiceLauncher')
 if (-not $mutex.WaitOne(0)) { exit 0 }
 try {
+    New-Item -ItemType Directory -Path $logDir,$tempDir,(Join-Path $root '验证') -Force | Out-Null
     Remove-Item -LiteralPath (Join-Path $root '临时文件\停止请求.flag') -ErrorAction SilentlyContinue
     & (Join-Path $PSScriptRoot 'start-status.ps1')
-    New-Item -ItemType Directory -Path $logDir,$tempDir -Force | Out-Null
     $env:TEMP = $tempDir
     $env:TMP = $tempDir
     $env:OMP_NUM_THREADS = '4'
@@ -32,6 +32,10 @@ try {
         if (-not $ready) { throw '语音服务未能启动，请查看部署记录中的日志。' }
     }
     if (Test-Path -LiteralPath (Join-Path $root '临时文件\停止请求.flag')) { return }
+    if (-not (Test-Path -LiteralPath (Join-Path $root 'tools\audio-devices.json'))) {
+        try { & (Join-Path $PSScriptRoot 'run-verification.ps1') -Script (Join-Path $PSScriptRoot 'list_audio_devices.py') | Out-Null }
+        catch { '首次麦克风枚举未完成，可在设置中刷新设备。' | Add-Content -LiteralPath (Join-Path $logDir 'launcher-errors.log') -Encoding UTF8 }
+    }
     $clients = Get-CimInstance Win32_Process -Filter "name='start_client.exe'" | Where-Object { $_.ExecutablePath -eq $clientExe }
     if (-not $clients) {
         Start-Process -FilePath $clientExe -WorkingDirectory $appDir -WindowStyle Hidden -RedirectStandardOutput (Join-Path $logDir 'client.stdout.log') -RedirectStandardError (Join-Path $logDir 'client.stderr.log') | Out-Null

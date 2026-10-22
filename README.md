@@ -28,21 +28,30 @@
 
 - Windows 10 / 11，64 位。
 - .NET Framework 4.x、Windows PowerShell 5.1；Windows 通常自带。
-- [Microsoft Visual C++ x64 运行库](https://learn.microsoft.com/zh-cn/cpp/windows/latest-supported-vc-redist)。缺少相关 DLL 时先安装运行库。
+- 完整包保留上游随附的 MSVC 运行 DLL。若特定系统仍报告依赖缺失，可参考 [Microsoft Visual C++ x64 运行库说明](https://learn.microsoft.com/zh-cn/cpp/windows/latest-supported-vc-redist)。
 - 模型使用 CPU，无需独立显卡；至少预留 **4 GB** 磁盘空间。安装包和模型压缩包合计约 **0.95 GB**，解压后还需要额外空间。
 - 已在 i5-12400、32 GB 内存、CPU 模式的 Windows 环境验证主要流程，其他硬件的速度和识别效果请自行测试。
 
-终端用户不需要另外安装 Python。Python 运行环境来自上游的官方 Windows 软件包。
+终端用户不需要另外安装 Python。完整离线包包含上游的 Python、随附运行 DLL 和中文模型；系统仍需满足 Windows 10/11 x64、.NET Framework 等平台要求。
 
 ## 安装与启动
 
-1. 从 [Releases](https://github.com/50kg/capswriter-desktop/releases/latest) 下载 `capswriter-desktop-版本-windows-x64.zip`，解压到一个**新的独立目录**。
-2. 双击 **`安装语音输入.cmd`**。首次安装会从上游官方 GitHub Release 下载运行环境和中文模型，并按仓库固定的 SHA-256 校验后解压。模型较大，请等待下载和解压完成。
-3. 安装结束后，双击 **`启动语音输入.vbs`**。托盘出现“本地语音输入”图标后即可使用。
+推荐下载 **完整离线包**，区别如下：
+
+| 下载文件 | 是否包含模型与运行环境 | 解压后的操作 |
+| --- | --- | --- |
+| `capswriter-desktop-版本-windows-x64-offline-full.zip` | 包含，约 1 GB，以 Release 显示为准 | **直接启动，不用安装、不用联网下载** |
+| `capswriter-desktop-版本-windows-x64.zip` | 轻量包，不包含 | 先运行安装脚本，首次需要获取官方资源 |
+
+1. 从 [Releases](https://github.com/50kg/capswriter-desktop/releases/latest) 下载文件名带 **`offline-full`** 的 ZIP，完整解压到一个**新的独立目录**。
+2. **不用运行安装脚本**，直接双击 **`启动语音输入.vbs`**。托盘出现“本地语音输入”图标后即可使用。
+3. 首次启动会自动准备本机麦克风列表，不携带打包机器的设备或个人设置。
 4. 点击目标输入框，按住 **Caps Lock** 说话，松开结束；也可以按 **F9** 开始，再按一次结束。
 5. 右键托盘 → **设置…**，选择麦克风，测试收音，添加多个说话单键，或启用开机启动；最后点击“保存并应用”。
 
-仅首次获取文件需要联网。安装完整且未启用上游的可选联网功能时，**日常语音识别在本机完成**，识别服务只监听 `127.0.0.1:6016`，不需要账号或 API Key。
+完整离线包从首次启动开始就无需再联网安装或下载模型。默认语音识别在本机完成，识别服务只监听 `127.0.0.1:6016`，不需要账号或 API Key。
+
+如果下载的是轻量包或 GitHub 自动生成的源码 ZIP，先运行 **`安装语音输入.cmd`**；安装器会从上游官方 Release 获取约 0.95 GB 的运行环境和模型，按固定 SHA-256 校验后安装。已备齐官方压缩包时也可以按下面的方法离线安装。
 
 ### 已有官方安装包 / 离线安装
 
@@ -76,7 +85,8 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Install.ps1 -A
 
 ## 数据与边界
 
-- 本仓库不含模型权重、Python 二进制环境、个人热词、录音、听写日志、麦克风列表或本机设置。
+- Git 源码仓库不含模型权重或 Python 二进制环境；它们仅随 Release 的完整离线包分发。
+- 所有发布包均不包含使用者的个人热词、录音、听写日志、麦克风列表或本机设置。完整包从已校验的官方原始包重建，不复制日常运行目录。
 - 安装后的 `voice-settings.json`、`microphone.json`、`CapsWriter/`、`临时文件/`、`部署记录/` 与缓存均已加入 Git 忽略规则。
 - **运行日志可能包含识别文本**，分享日志或提交 Issue 前请自行脱敏。开启音频归档后，文件保存在本机运行目录的年/月子目录。
 - 输入目标检测依赖 Windows 辅助功能接口。某些自定义输入框、权限不匹配的应用或无法确认回执的目标会退回剪贴板；不保证所有软件都能自动填入。
@@ -90,6 +100,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Install.ps1 -A
 overlay/       对上游源码和默认配置的增强覆盖层
 tools/         桌面界面源码、启动管理、设置与音频检查
 scripts/       安装、构建、校验和打包脚本
+third_party/   模型许可和完整包的第三方来源说明
 defaults/      不包含个人信息的初始设置和热词模板
 tests/         不依赖模型下载的自动化测试
 docs/          常见问题、开发和验证说明
@@ -111,4 +122,4 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Check.ps1
 - [CapsWriter-Offline](https://github.com/HaujetZhao/CapsWriter-Offline)：Haujet Zhao 开发的离线语音输入项目，本项目基于其 v2.6 软件包。保留原始 [MIT LICENSE](LICENSE)。
 - [Fun-ASR-Nano GGUF 发布资源](https://github.com/HaujetZhao/CapsWriter-Offline/releases/tag/models)：默认中文识别模型，由安装器单独下载。
 
-本项目的 MIT 许可证不替代模型和第三方依赖各自的许可证。详情见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
+本项目的 MIT 许可证不替代模型和第三方依赖各自的许可证。完整包附带模型的 Apache-2.0 许可，并保留官方运行包内各依赖的许可文件。详情见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
