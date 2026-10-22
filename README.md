@@ -1,10 +1,23 @@
 # CapsWriter Desktop · 离线中文语音输入
 
+## 下载即用（推荐）
+
+### [⬇ 下载完整离线包 · v0.2.0 · 约 970 MB](https://github.com/50kg/capswriter-desktop/releases/download/v0.2.0/capswriter-desktop-0.2.0-windows-x64-offline-full.zip)
+
+**已包含中文模型和运行环境，适用于 Windows 10 / 11 64 位。无需另装 Python，无需联网安装或下载模型。**
+
+1. 下载上面的 **`offline-full.zip` 完整包**，将整个压缩包解压到一个新的独立文件夹。
+2. 打开解压后的文件夹，双击 **`启动语音输入.vbs`**，等待托盘出现“本地语音输入”图标。
+3. 点击要输入文字的输入框，单独按住 **Caps Lock 超过 0.3 秒**开始说话，松开结束；也可按 **F9** 开始，再按一次结束。
+4. 需要切换麦克风或说话按键时，右键托盘图标 → **设置…** → 修改后“保存并应用”。
+
+**完整包不用运行 `安装语音输入.cmd`。** 请下载文件名含 **`offline-full`** 的 ZIP；轻量包和 GitHub 自动生成的 **Source code** 不包含完整运行环境与模型。
+
+[查看最新发布与校验文件](https://github.com/50kg/capswriter-desktop/releases/latest) · [详细安装说明](#安装与启动) · [常见问题](docs/FAQ.md) · [开发与构建](docs/DEVELOPMENT.md)
+
 面向 Windows 的中文语音输入桌面封装：一个启动入口、一个托盘、可见的收音状态，以及集中管理的麦克风和说话按键设置。
 
 基于 [HaujetZhao/CapsWriter-Offline](https://github.com/HaujetZhao/CapsWriter-Offline) v2.6 开发。**语音识别核心来自上游，本项目提供桌面界面、启动管理和输入行为增强。** 默认使用 Fun-ASR-Nano GGUF q5 的 CPU 模式。
-
-[下载桌面封装](https://github.com/50kg/capswriter-desktop/releases/latest) · [安装说明](#安装与启动) · [常见问题](docs/FAQ.md) · [开发与构建](docs/DEVELOPMENT.md)
 
 ## 功能
 
@@ -120,6 +133,6 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Check.ps1
 ## 致谢与许可证
 
 - [CapsWriter-Offline](https://github.com/HaujetZhao/CapsWriter-Offline)：Haujet Zhao 开发的离线语音输入项目，本项目基于其 v2.6 软件包。保留原始 [MIT LICENSE](LICENSE)。
-- [Fun-ASR-Nano GGUF 发布资源](https://github.com/HaujetZhao/CapsWriter-Offline/releases/tag/models)：默认中文识别模型，由安装器单独下载。
+- [Fun-ASR-Nano GGUF 发布资源](https://github.com/HaujetZhao/CapsWriter-Offline/releases/tag/models)：默认中文识别模型，完整离线包已包含；使用轻量包时由安装器下载。
 
 本项目的 MIT 许可证不替代模型和第三方依赖各自的许可证。完整包附带模型的 Apache-2.0 许可，并保留官方运行包内各依赖的许可文件。详情见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
