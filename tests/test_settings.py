@@ -1,5 +1,7 @@
 import ast
+import contextlib
 import importlib.util
+import io
 import json
 from pathlib import Path
 import types
@@ -24,7 +26,8 @@ class PreferencesTests(unittest.TestCase):
         original = settings.load
         try:
             settings.load = lambda: values
-            settings.apply(config)
+            with contextlib.redirect_stdout(io.StringIO()):
+                settings.apply(config)
         finally:
             settings.load = original
         self.assertEqual([s['key'] for s in config.shortcuts], ['alt_l', 'ctrl_l', 'x2', 'f9'])

@@ -102,7 +102,7 @@ manifest.json  固定的上游版本、官方资源地址与校验值
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Build.ps1
-python -m unittest discover -s tests -v
+python -X utf8 -m unittest discover -s tests -v
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Check.ps1
 ```
 

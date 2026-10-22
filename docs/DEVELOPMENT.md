@@ -19,7 +19,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Build.ps1
 输出三个程序到 `tools/`，均不进入 Git。开发测试使用 Python 3.12+ 标准库；日常客户端使用官方包内的 Python 3.13 环境，无需让用户另外配置 Python 依赖。
 
 ```powershell
-python -m unittest discover -s tests -v
+python -X utf8 -m unittest discover -s tests -v
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Check.ps1
 ```
 
