@@ -12,7 +12,7 @@
 ## Fun-ASR-Nano GGUF
 
 - 默认模型资产：https://github.com/HaujetZhao/CapsWriter-Offline/releases/tag/models
-- 原始模型项目：https://github.com/FunAudioLLM/Fun-ASR
+- 原始模型项目：https://github.com/QwenAudio/Fun-ASR
 - 模型权重不包含在 Git 仓库或本项目发布的增强包中，由用户的安装器单独下载。
 - 模型及转换后资源的使用范围应以其原始发布方的许可证为准；本项目 MIT 许可证仅覆盖适用的代码，不能替代模型许可。
 
